@@ -19,8 +19,8 @@ cd "C:\Users\wb255520\Documents\GitHub\adecomp\run"
 ***********************************************
 ***	 Pull the data using datalibweb
 ***********************************************
-/* please remove the version control of both master and adaptation if you would like to obtain 
-the latest available file */
+/* please remove the version control of both master and adaptation if you 
+would like to obtain the latest available file */
 
 datalibweb, country (tur) year(2006 2011) type(ecapov) ///
 			module(3 7)incppp(gall gallT health rent durables) ppp(2011) ///
@@ -54,7 +54,8 @@ drop if adults==0
 /* Generate expenditure aggregate at the household level 		*/
 *****************************************************************
 
-egen double gallT2_2011ppp  = rowtotal(gall_2011ppp health_2011ppp durables_2011ppp)
+egen double gallT2_2011ppp  = ///
+		rowtotal(gall_2011ppp health_2011ppp durables_2011ppp)
 
 *****************************************************************
 /* Generate population weights at the household level  			*/
@@ -62,13 +63,15 @@ egen double gallT2_2011ppp  = rowtotal(gall_2011ppp health_2011ppp durables_2011
 
 gen popw=weight*hhsize
 
-drop if popw == .                               	 /* drop 25 observations */
+drop if popw == .                             /* drop 25 observations */
 
 *****************************************************************
-*** Generate income variables (in PPP prices) all values already in 2005 prices.
+*** Generate income variables (in PPP prices) all values already 
+***	in 2005 prices.
 *****************************************************************
 
-foreach var of varlist  totinc_def oinc_def wage_def SA_def remit_def pension_def unemp_def property_def agri_inc_def {
+foreach var of varlist  totinc_def oinc_def wage_def SA_def remit_def ///
+						pension_def unemp_def property_def agri_inc_def {
 	replace `var'=`var'/icp2005
 	replace `var'=`var'/1000000 if year==2002
 }
@@ -89,15 +92,19 @@ replace wage_def_pe=0 if wage_def==0
 
 gen double totinc_def_pc = totinc_def/hhsize
 
-foreach var of varlist oinc_def SA_def remit_def pension_def  unemp_def property_def agri_inc_def {
+foreach var of varlist oinc_def SA_def remit_def pension_def  ///
+								unemp_def property_def agri_inc_def {
 	gen  `var'_pa=`var'/adults
 }
 
-egen double total=rsum(oinc_def wage_def SA_def remit_def pension_def  unemp_def property_def agri_inc_def)
+egen double total=rsum(oinc_def wage_def SA_def remit_def pension_def  ///
+							unemp_def property_def agri_inc_def)
 
-gen double other_def_pa=((totinc_def-total)/adults) + unemp_def_pa + property_def_pa +  oinc_def_pa
+gen double other_def_pa=((totinc_def-total)/adults) + unemp_def_pa + ///
+									property_def_pa +  oinc_def_pa
 
-gen double other_def_pa1=((totinc_def-total)/adults) + property_def_pa +  oinc_def_pa
+gen double other_def_pa1=((totinc_def-total)/adults) + property_def_pa +  ///
+									oinc_def_pa
 
 *****************************************************************
 /* Generate poverty lines  */
@@ -154,7 +161,8 @@ adecomp totinc_def_pc ///
 *********************************************************
 *** Expenditure
 *********************************************************
-*** generate propensity to consume (only applies if expenditure data is collected in the same survey) */
+*** generate propensity to consume (only applies if 
+***	expenditure data is collected in the same survey) */
 *********************************************************
 ***** 5.00 USD-PPP
 
@@ -171,11 +179,13 @@ adecomp gallT2_2011ppp cration ///
 
 
 *********************************************************
-/*** generate propensity to consume (only applies if expenditure data is collected in the same survey) */
+/*** generate propensity to consume (only applies if 
+	expenditure data is collected in the same survey) 	*/
 *********************************************************
 ***** 5.00 USD-PPP
 
-egen nonlabor_pa = rowtotal( SA_def_pa   pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa )
+egen nonlabor_pa = rowtotal( SA_def_pa   pension_def_pa  remit_def_pa  ///
+								agri_inc_def_pa other_def_pa )
 
 adecomp gallT2_2011ppp cration ///
 		adult_sh employed_sh wage_def_pe ///
