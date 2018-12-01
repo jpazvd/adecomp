@@ -10,14 +10,17 @@ adecomp implements the shapley decomposition of changes in a welfare indicator a
 
 ## References
 
+[Azevedo, Joao Pedro,  Minh C. Nguyen, Viviane Sanfelice (2012) Shapley decomposition by components of a welfare aggregate. Washington, DC: World Bank.](https://github.com/jazevedo75/adecomp/blob/master/doc/paper_decomp_shapley_income%406.pdf)
 
+[Azevedo, Joao Pedro & Inchauste, Gabriela & Sanfelice, Viviane, 2013. "Decomposing the recent inequality decline in Latin America," Policy Research Working Paper Series 6715, The World Bank.](http://hdl.handle.net/10986/16931)
 
-[link name](https://github.com/jazevedo75/adecomp/blob/master/doc/paper_decomp_shapley_income%406.pdf)
+[Azevedo, Joao Pedro & Inchauste, Gabriela & Olivieri, Sergio & Saavedra, Jaime & Winkler, Hernan, 2013. "Is labor income responsible for poverty reduction ? a decomposition approach," Policy Research Working Paper Series 6414, The World Bank.](http://hdl.handle.net/10986/15552)
 
+[Inchauste, Gabriela; Azevedo, João Pedro; Essama-Nssah, B.; Olivieri, Sergio; Van Nguyen, Trang; Saavedra-Chanduvi, Jaime; Winkler, Hernan. 2014. Understanding Changes in Poverty. Directions in Development--Poverty;. World Bank Group, Washington, DC. © World Bank.](http://hdl.handle.net/10986/19445)
 
 ## Suggested Citation
 
-Joao Pedro Azevedo & Minh Cong Nguyen & Viviane Sanfelice, 2012. "ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure," Statistical Software Components S457562, Boston College Department of Economics.
+[Azevedo, Joao Pedro, Minh Cong Nguyen, and Viviane Sanfelice, 2012. "ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure," Statistical Software Components S457562, Boston College Department of Economics.](https://ideas.repec.org/c/boc/bocode/s457562.html)
 
 Handle: RePEc:boc:bocode:s457562 
 
