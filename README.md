@@ -12,7 +12,7 @@ adecomp implements the shapley decomposition of changes in a welfare indicator a
 
 
 
-https://github.com/jazevedo75/adecomp/blob/master/doc/paper_decomp_shapley_income%406.pdf
+[link name](https://github.com/jazevedo75/adecomp/blob/master/doc/paper_decomp_shapley_income%406.pdf)
 
 
 ## Suggested Citation
