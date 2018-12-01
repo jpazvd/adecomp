@@ -164,7 +164,8 @@ adecomp gallT2_2011ppp cration ///
 		adult_sh employed_sh wage_def_pe ///
 		SA_def_pa   pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa ///
 			[w=popw] , by(year) ///
-				equation(c1*(c2*((c3*c4)+c5+c6+c7+c8+c9))) indicator(fgt0  gini)  varpl( pline500 )
+				equation(c1*(c2*((c3*c4)+c5+c6+c7+c8+c9))) ///
+				indicator(fgt0  gini)  varpl( pline500 )
 
 
 
@@ -180,7 +181,8 @@ adecomp gallT2_2011ppp cration ///
 		adult_sh employed_sh wage_def_pe ///
 		nonlabor_pa ///
 			[w=popw] , by(year) ///
-				equation(c1*(c2*((c3*c4)+c5))) indicator(fgt0  gini)  varpl( pline500 )
+				equation(c1*(c2*((c3*c4)+c5))) ///
+				indicator(fgt0  gini)  varpl( pline500 )
 
 				
 *********************************************************
@@ -194,7 +196,8 @@ adecomp totinc_def_pc ///
 	SA_def_pa pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa  ///
 		[w=popw] ,by(year) ///
 			equation(c1*((c2*c3)+c4+c5+c6+c7+c8)) ///
-			indicator(fgt0 fgt1 fgt2 gini theil)  varpl(pline250) bottom(40) method(growth)
+			indicator(fgt0 fgt1 fgt2 gini theil)  ///
+			varpl(pline250) bottom(40) method(growth)
 		
 
 ***** 2.50 USD-PPP */
@@ -203,7 +206,8 @@ adecomp totinc_def_pc ///
 		adult_sh employed_sh wage_def_pe ///
 		nonlabor_pa ///
 		[w=popw] ,by(year) equation(c1*((c2*c3)+c4)) ///
-			indicator(fgt0 fgt1 fgt2 gini theil)  varpl(pline250) bottom(40) method(growth)
+			indicator(fgt0 fgt1 fgt2 gini theil)  ///
+			varpl(pline250) bottom(40) method(growth)
 		
 ***** 5.00 USD-PPP
 		
