@@ -1,9 +1,19 @@
+**********************************************
+** 	Example of adecomp for decoomposing changes of 
+** 	Poverty, Inequality and the Growth of the bottom 40 
+** 
+** 	Author: 	Joao Pedro Azevedo
+** 	Date: 	30nov2018
+**********************************************
+***********************************************
+***	 Set system
+***********************************************
 clear
 set seed  1000001
 set matsize 4000
 
 *cd C:\Users\wb255520\Documents\000.general\02.ado_files\14.adecomp\examples
-cd "C:\Users\wb255520\OneDrive - WBG\000.general\02.ado_files\14.adecomp\examples"
+*cd "C:\Users\wb255520\OneDrive - WBG\000.general\02.ado_files\14.adecomp\examples"
 cd "C:\Users\wb255520\Documents\GitHub\adecomp\run"
 
 ***********************************************
@@ -32,9 +42,11 @@ replace wage_def=0 if age<15     						/*55 observations*/
 ***********************************************
 
 collapse ///
-		(mean) weight icp2005 cpi2005 gall gallT health durables hhsize gall_2011ppp health_2011ppp durables_2011ppp ///
-		(sum) totinc_def oinc_def wage_def SA_def remit_def pension_def unemp_def property_def agri_inc_def adults employed  \\\
-			, by(hhid /*quarter*/ year)
+		(mean) weight icp2005 cpi2005 gall gallT health durables hhsize ///
+				gall_2011ppp health_2011ppp durables_2011ppp 			///
+		(sum) totinc_def oinc_def wage_def SA_def remit_def pension_def ///
+				unemp_def property_def agri_inc_def adults employed  ///
+			, by(hhid year)
 
 drop if adults==0
 
@@ -42,7 +54,7 @@ drop if adults==0
 /* Generate expenditure aggregate at the household level 		*/
 *****************************************************************
 
-egen double gallT2_2011ppp  = rowtotal(gall_2011ppp health_2011ppp durables_ppp)
+egen double gallT2_2011ppp  = rowtotal(gall_2011ppp health_2011ppp durables_2011ppp)
 
 *****************************************************************
 /* Generate population weights at the household level  			*/
@@ -146,7 +158,7 @@ adecomp totinc_def_pc ///
 *********************************************************
 ***** 5.00 USD-PPP
 
-gen cration= gallT2_ppp/ totinc_def_pc
+gen cration= gallT2_2011ppp/ totinc_def_pc
 
 adecomp gallT2_2011ppp cration ///
 		adult_sh employed_sh wage_def_pe ///
@@ -161,7 +173,6 @@ adecomp gallT2_2011ppp cration ///
 /*** generate propensity to consume (only applies if expenditure data is collected in the same survey) */
 *********************************************************
 ***** 5.00 USD-PPP
-*gen cration= gallT2_ppp/ totinc_def_pc
 
 egen nonlabor_pa = rowtotal( SA_def_pa   pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa )
 
