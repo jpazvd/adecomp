@@ -4,6 +4,7 @@ program define _ex_adecomp, rclass
 syntax, example(numlist)
 
 preserve
+
 if ( "`example'" == "1") {
 
 	use exdata_adecomp.dta, clear
@@ -39,4 +40,5 @@ if ( "`example'" == "1") {
 	graph bar share_effect , over(effect, label(labsize(*0.6))) by(indicator)  ytitle(Share of the component effect in the total change)
 }
 restore
+
 end

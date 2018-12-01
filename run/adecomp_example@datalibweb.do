@@ -26,6 +26,13 @@ datalibweb, country (tur) year(2006 2011) type(ecapov) ///
 			module(3 7)incppp(gall gallT health rent durables) ppp(2011) ///
 			vermast(01)  veralt(02)  append  clear
 
+save adecomp_example_v2.dta, replace
+
+***********************************************
+***	Call dataset
+***********************************************
+
+use adecomp_example_v2.dta, clear
 
 ***********************************************
 ***	Derive individual variables
