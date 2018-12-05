@@ -29,9 +29,10 @@ For further examples of implementations of this approach please see Azevedo, Inc
 
 [Azevedo, Joao Pedro, Minh Cong Nguyen, and Viviane Sanfelice, 2012. "ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure," Statistical Software Components S457562, Boston College Department of Economics.](https://ideas.repec.org/c/boc/bocode/s457562.html)
 
-Handle: RePEc:boc:bocode:s457562 
+#### Handle: RePEc:boc:bocode:s457562 
 
-
-## Note: 
-
+#### Note: 
 This module should be installed from within Stata by typing "ssc install adecomp". Windows users should not attempt to download these files with a web browser.
+
+#### Keywords
+Poverty, Inequality, Decomposition, Nonparametric
