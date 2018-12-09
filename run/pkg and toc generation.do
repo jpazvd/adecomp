@@ -14,5 +14,5 @@ makedlg adecomp, ///
 	version("1.1") license("MIT") author("Joao Pedro Azevedo") affiliation("World Bank") ///
 	url("http://www.worldbank.org/en/about/people/j/joao-pedro-azevedo") ///
 	email("jazevedo@worldbank.org") ///
-	install(`""C:\GitHub_myados\ADECOMP-Stata-module-to-estimate-Shapley-Decomposition-by-Components-of-a-Welfare-Measure\src\a\adecomp.ado"  "C:\GitHub_myados\ADECOMP-Stata-module-to-estimate-Shapley-Decomposition-by-Components-of-a-Welfare-Measure\src\a\adecomp.sthlp" "C:\GitHub_myados\ADECOMP-Stata-module-to-estimate-Shapley-Decomposition-by-Components-of-a-Welfare-Measure\src\_\_ex_adecomp.ado""') ///
-	ancillary(`""C:\GitHub_myados\ADECOMP-Stata-module-to-estimate-Shapley-Decomposition-by-Components-of-a-Welfare-Measure\src\e\exdata_adecomp.dta""')
+	install(`""C:\Users\wb255520\Documents\myados\adecomp\src\a\adecomp.ado"  "C:\Users\wb255520\Documents\myados\adecomp\src\a\adecomp.sthlp" "C:\Users\wb255520\Documents\myados\adecomp\src\_\_ex_adecomp.ado""') ///
+	ancillary(`""C:\Users\wb255520\Documents\myados\adecomp\src\e\exdata_adecomp.dta""')
