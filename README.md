@@ -64,8 +64,8 @@ of Games, Vol. 2 (Princeton, N.J.: Princeton University Press).
 Shorrocks, Anthony (2012) Decomposition procedures for distributional analysis: a unified framework based on the 
 Shapley value. Journal of Economic Inequality  (link to publication)
 
-[World Bank (2012) The Effect Of Women'S Economic Power: in Latin America and the Caribbean. LAC Poverty and Labor 
-Brief. World Bank: Washington DC.](http://documents.worldbank.org/curated/en/731771468010902462/The-effect-of-womens-economic-power-in-Latin-America-and-the-Caribbean )
+[World Bank. 2012. The effect of women's economic power in Latin America and the Caribbean (English). Latin America 
+and the Caribbean poverty and labor brief. Washington, DC: World Bank. ](http://documents.worldbank.org/curated/en/731771468010902462/The-effect-of-womens-economic-power-in-Latin-America-and-the-Caribbean )
 
 
 ## Suggested Citation
