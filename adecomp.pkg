@@ -4,5 +4,7 @@ d
 d Distribution-Date:   20181209
 d License: MIT
 d 
-F ainequal.ado
-F ainequal.hlp
+F adecomp.ado
+F adecomp.sthlp
+F _ex_adecomp.ado
+f exdata_adecomp.dta
