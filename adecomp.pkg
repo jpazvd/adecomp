@@ -4,7 +4,7 @@ d
 d Distribution-Date:   20181209
 d License: MIT
 d 
-F adecomp.ado
-F adecomp.sthlp
-F _ex_adecomp.ado
-f exdata_adecomp.dta
+F src/a/adecomp.ado
+F src/a/adecomp.sthlp
+F src/_/_ex_adecomp.ado
+f src/e/exdata_adecomp.dta
