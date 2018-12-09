@@ -18,14 +18,14 @@ For further examples of implementations of this approach please see Azevedo, Inc
 
 ### Where
 
-   welfarevar is the welfare aggregate variable.
+   - welfarevar is the welfare aggregate variable.
 
-   components are the components used to construct the welfare variable, and which will be for the decomposition.
+   - components are the components used to construct the welfare variable, and which will be for the decomposition.
 
-   by is the comparison indicator. It must take two categorical values and is usually defines two points in time or two
+   - by is the comparison indicator. It must take two categorical values and is usually defines two points in time or two
     geographic locations, which the difference of the indicator of choice is being decomposed.
 
-   equation() captures the relationship between welfarevar and components.  The component variables in varlist must be
+   - equation() captures the relationship between welfarevar and components.  The component variables in varlist must be
     denoted by c#, and must be separated by an arithmetic operator.
 
 
