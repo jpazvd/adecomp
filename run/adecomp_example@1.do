@@ -3,7 +3,7 @@
 ** 	Poverty, Inequality and the Growth of the bottom 40 
 ** 
 ** 	Author: 	Joao Pedro Azevedo
-** 	Date: 	30nov2018
+** 	Date: 		30nov2018
 **********************************************
 ***********************************************
 ***	 Set system
@@ -14,8 +14,7 @@ set matsize 4000
 
 *cd C:\Users\wb255520\Documents\000.general\02.ado_files\14.adecomp\examples
 *cd "C:\Users\wb255520\OneDrive - WBG\000.general\02.ado_files\14.adecomp\examples"
-cd "C:\Users\wb255520\Documents\GitHub\adecomp\run"
-
+cd	"C:\Users\wb255520\Documents\myados\adecomp\run"
 
 ***********************************************
 ***	Call dataset
@@ -102,6 +101,17 @@ gen double other_def_pa=((totinc_def-total)/adults) + unemp_def_pa + ///
 gen double other_def_pa1=((totinc_def-total)/adults) + property_def_pa +  ///
 									oinc_def_pa
 
+egen nonlabor_pa = rowtotal( SA_def_pa   pension_def_pa  remit_def_pa  ///
+							agri_inc_def_pa other_def_pa )
+								
+*********************************************************
+*** generate propensity to consume (only applies if 
+***	expenditure data is collected in the same survey) */
+*********************************************************
+
+gen cratio = gallT2_2011ppp/ totinc_def_pc
+							
+									
 *****************************************************************
 /* Generate poverty lines  */
 *****************************************************************
@@ -118,7 +128,7 @@ gen pline10=10*365
 *****************************************************************
 /* Decomposition            */
 *****************************************************************
-/** Specification:
+/** Specification 1:											
 
 Y_pc = Y_t/P = A/P * (L_t + NL_t)/A = A/P*[(O/A*W/O)+NL/A]
 
@@ -135,10 +145,32 @@ O/A  = Share of adults with labor income different from zero
 W/O  = Average earnings of adults with labor income different from zero
 NL/A = Average non labor earnings per adults (15+ years of age)
 
-*********************************************************
+/** Specification 2:
+
+C_pc = c*Y_pc = c*(Y_t/P) = c*(A/P * (L_t + NL_t)/A) = c*(A/P*[(O/A*W/O)+NL/A])
+
+where:
+
+C_pc = Per capita Consumption
+Y_pc = Per capita Income
+c	 = Propensity to consume
+Y_t  = Total household income
+P    = Total members of the household
+A    = Total number of adults in the household (15+ years of age)
+L_t  = Total Labor Income in the household
+NL_t = Total Non Labor Income in the household
+A/P  = Share of adults in the household (15 + yearss of age)
+O/A  = Share of adults with labor income different from zero
+W/O  = Average earnings of adults with labor income different from zero
+NL/A = Average non labor earnings per adults (15+ years of age)
+
+
+*********************************************************/
 *** Income decomposition
 *********************************************************
-***** 2.50 USD-PPP */
+***** Poverty line 2.50 USD-PPP */
+***** Long specification [8 components]
+*********************************************************
 
 adecomp totinc_def_pc ///
 	adult_sh employed_sh wage_def_pe ///
@@ -146,7 +178,10 @@ adecomp totinc_def_pc ///
 		[w=popw] ,by(year) equation(c1*((c2*c3)+c4+c5+c6+c7+c8)) ///
 			indicator(fgt0 fgt1 fgt2 gini theil)  varpl(pline250)
 
-***** 5.00 USD-PPP
+*********************************************************
+***** Poverty line 5.00 USD-PPP */
+***** Long specification [8 components]
+*********************************************************
 
 adecomp totinc_def_pc ///
 	adult_sh employed_sh wage_def_pe ///
@@ -155,47 +190,10 @@ adecomp totinc_def_pc ///
 			indicator(fgt0 fgt1 fgt2 gini theil)  varpl(pline500)
 
 *********************************************************
-*** Expenditure
+***** Share Prosperity
+***** Long specification [8 components]
+***** Required poverty line to be specified 2.50 USD-PPP */
 *********************************************************
-*** generate propensity to consume (only applies if 
-***	expenditure data is collected in the same survey) */
-*********************************************************
-***** 5.00 USD-PPP
-
-gen cration= gallT2_2011ppp/ totinc_def_pc
-
-adecomp gallT2_2011ppp cration ///
-		adult_sh employed_sh wage_def_pe ///
-		SA_def_pa   pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa ///
-			[w=popw] , by(year) ///
-				equation(c1*(c2*((c3*c4)+c5+c6+c7+c8+c9))) ///
-				indicator(fgt0  gini)  varpl( pline500 )
-
-
-
-
-*********************************************************
-/*** generate propensity to consume (only applies if 
-	expenditure data is collected in the same survey) 	*/
-*********************************************************
-***** 5.00 USD-PPP
-
-egen nonlabor_pa = rowtotal( SA_def_pa   pension_def_pa  remit_def_pa  ///
-								agri_inc_def_pa other_def_pa )
-
-adecomp gallT2_2011ppp cration ///
-		adult_sh employed_sh wage_def_pe ///
-		nonlabor_pa ///
-			[w=popw] , by(year) ///
-				equation(c1*(c2*((c3*c4)+c5))) ///
-				indicator(fgt0  gini)  varpl( pline500 )
-
-				
-*********************************************************
-*** Share Prosperity
-*********************************************************
-
-***** 2.50 USD-PPP */
 
 adecomp totinc_def_pc ///
 	adult_sh employed_sh wage_def_pe ///
@@ -206,7 +204,11 @@ adecomp totinc_def_pc ///
 			varpl(pline250) bottom(40) method(growth)
 		
 
-***** 2.50 USD-PPP */
+*********************************************************
+***** Short specification		
+***** Long specification [4 components]
+***** Required poverty line to be specified 2.50 USD-PPP */
+*********************************************************
 
 adecomp totinc_def_pc ///
 		adult_sh employed_sh wage_def_pe ///
@@ -214,15 +216,55 @@ adecomp totinc_def_pc ///
 		[w=popw] ,by(year) equation(c1*((c2*c3)+c4)) ///
 			indicator(fgt0 fgt1 fgt2 gini theil)  ///
 			varpl(pline250) bottom(40) method(growth)
-		
+			
+			
+*********************************************************
+*** Expenditure
+*********************************************************
+*** use propensity to consume (only applies if 
+***	expenditure data is collected in the same survey) */
+*********************************************************
+***** Long specification [9 components]
+***** Poverty line : 5.00 USD-PPP
+*********************************************************
+
+
+adecomp gallT2_2011ppp cratio ///
+		adult_sh employed_sh wage_def_pe ///
+		SA_def_pa   pension_def_pa  remit_def_pa  agri_inc_def_pa other_def_pa ///
+			[w=popw] , by(year) ///
+				equation(c1*(c2*((c3*c4)+c5+c6+c7+c8+c9))) ///
+				indicator(fgt0  gini)  varpl( pline500 )
+
+
+********************************************************
+***** Short specification [5 components]
 ***** 5.00 USD-PPP
+********************************************************
+
+adecomp gallT2_2011ppp cratio ///
+		adult_sh employed_sh wage_def_pe ///
+		nonlabor_pa ///
+			[w=popw] , by(year) ///
+				equation(c1*(c2*((c3*c4)+c5))) ///
+				indicator(fgt0  gini)  varpl( pline500 )
+
+				
+	
+********************************************************
+***** Short specification [5 components]
+***** Shared-Prosperity (required poverty line to be specified 5.00 USD-PPP)
+********************************************************
 		
-adecomp gallT2_2011ppp cration ///
+adecomp gallT2_2011ppp cratio ///
 		adult_sh employed_sh wage_def_pe ///
 		nonlabor_pa ///
 			[w=popw] , by(year) ///
 				equation(c1*((c2*((c3*c4)+c5)))) bottom(40) ///
 				method(growth) indicator(fgt0)  varpl( pline500 )
 
+*********************************************************/
+*********************************************************/
+*********************************************************/
 				
 				
