@@ -3,6 +3,7 @@
 help for {cmd:adecomp}{right:Joao Pedro Azevedo}
 {right:Minh Cong Nguyen}
 {right:Viviane Sanfelice}
+{right:version 1.4}
 {hline}
 
 {title:{cmd:adecomp} - Shapley Decomposition by Components of a Welfare Measure}
@@ -15,18 +16,23 @@ help for {cmd:adecomp}{right:Joao Pedro Azevedo}
 [{cmd:if} {it:exp}]
 [{cmd:in} {it:exp}],
 {cmd:by}{cmd:(}{it:varname}{cmd:)}
-{cmd:equation}{cmd:(}{it:c#[{it:operator}]c#[{it:operator}]c#[{it:operator}]...[{it:operator}]cN}{cmd:)}
-[ {cmd:indicator}{cmd:(}{it:string}{cmd:)}
+{opt eq:uation}{cmd:(}{it:c#[{it:operator}]c#[{it:operator}]c#[{it:operator}]...[{it:operator}]cN}{cmd:)}
+[ {opt in:dicator}{cmd:(}{it:string}{cmd:)}
 {cmd:varpl}{cmd:(}{it:varname}{cmd:)}
 {cmd:mpl}{cmd:(}{it:numlist}{cmd:)}
 {cmd:gic}{cmd:(}{it:#}{cmd:)}
-{cmd:group}{cmd:(}{it:varname}{cmd:)}
+{opt gr:oup}{cmd:(}{it:varname}{cmd:)}
 {cmd:id}{cmd:(}{it:varname}{cmd:)}
-{cmd:rank}{cmd:(}{it:string}{cmd:)}
+{opt r:ank}{cmd:(}{it:string}{cmd:)}
 {cmd:strata}{cmd:(}{it:varlist}{cmd:)}
-{cmd:percentile}{cmd:(}{it:#}{cmd:)}
+{opt perc:entile}{cmd:(}{it:#}{cmd:)}
+{opt b:ottom}{cmd:(}{it:#}{cmd:)}
+{opt t:op}{cmd:(}{it:#}{cmd:)}
+{opt mid:dle}{cmd:(}{it:numlist}{cmd:)}
+{opt m:ethod}{cmd:(}{it:string}{cmd:)}
 {cmd:oneway}
 {cmd:std}
+{opt s:tats}{cmd:(}{it:string}{cmd:)}
 ]{p_end}
 
 {p 4 4 2}{cmd:fweights} and {cmd:aweights} are allowed; see help weights. See help {help weight}.{p_end}
@@ -58,7 +64,6 @@ and keep everything else constant.{p_end}
 
 {p 4 4 2}For further examples of implementations of this approach please see Azevedo, Inchausete and Sanfelice (2012).{p_end}
 
-
 {title:Thanks for citing adecomp as follows}
 
 {p 4 4 2}Azevedo, Joao Pedro, Viviane Sanfelice and Minh Cong Nguyen (2012) Shapley Decomposition by Components of a Welfare Measure. World Bank. (mimeo){p_end}
@@ -78,8 +83,12 @@ The component variables in {it:varlist} must be denoted by c#, and must be separ
 
 {title:Options}
 
-{p 4 4 2}{cmd:{opt in:dicator(string)}} poverty and inequality indicators. fgt0, fgt1, fgt2, gini and theil are the currently supported 
+{p 4 4 2}{cmd:{opt in:dicator(string)}} poverty and inequality indicators. fgt0, fgt1, fgt2, gini, theil, and mean are the currently supported 
 options.{p_end}
+
+{p 4 4 2}{cmd:{opt t:op(#)}, {opt b:ottom(#)}} mean at bottom x%, top y% of the {it:welfarevar} distribution, and {opt mr:atio} is the ratio between the mean of bottom x% over the mean of the whole distribution.{p_end}
+
+{p 4 4 2}{cmd:{opt mid:dle(# #)}} mean at middle part of distribution between x% and y%.{p_end}
 
 {p 4 4 2}{cmd:{opt varpl(varname)}} poverty line variable. It must be specified when fgt0, fgt1 and/or fgt2 indicators 
 are used.{p_end}
@@ -90,23 +99,27 @@ specified when  fgt0, fgt1 and/or fgt2 indicators are used.{p_end}
 {p 4 4 2}{cmd:{opt gic(#)}} use as indicator the percentual change on the average of {it:welfarevar} in which one 
 of its {it:#} percentile, i.e., decomposing the Growth Incidence Curve of {it:welfarevar}. You need to specify a number of bins{p_end}
 
-{p 4 4 2}{cmd:{opt group(varname)}} the indicators are calculated by each group of {it:groupvar}. Differ from the 
+{p 4 4 2}{cmd:{opt gr:oup(varname)}} the indicators are calculated by each group of {it:groupvar}. Differ from the 
 {hi:if} option because do not restrict the database. {it:Groupvar} must be a numeric and discrete variable.{p_end}
 
 {p 4 4 2}{cmd:{opt id(varname)}} to specify the identificator variable in case of balanced panel data. The observed value of the unit of analysis is going to be used when changing the distribution.{p_end}
 
 {p 4 4 2}{cmd:{opt strata(varlist)}} allow the transposition of distributions be made within groups created using the variables listed in {it:varlist}.{p_end}
 
-{p 4 4 2}{cmd:{opt rank(string)}} specific the rank of which variable must be used when changing the distribution.
+{p 4 4 2}{cmd:{opt r:ank(string)}} specific the rank of which variable must be used when changing the distribution.
 It can be a {it:varname} or typing {it:components} the rank of each {it:component} is going to be used. Default is 
 {it:welfarevar} rank.{p_end}
 
 {p 4 4 2}{cmd:{opt perc:entile(#)}} used {it:#} percentile of {it:componentvar} to change the distribution. Default 
 is to rescale the dataset in each period.{p_end}
 
+{p 4 4 2}{cmd:{opt m:ethod(string)}} specify the method for Shapley decomposition, the default is "difference". The other option is "growth" and the results are the annualized growth using the exponential growth rate definition such as r = ln(Yt/Y1)/T, and T is the difference between period 0 and period 1.{p_end}
+
 {p 4 4 2}{cmd:{opt oneway}} decomposition is made only one way from period 0 to period 1. Default is both ways.{p_end}
 
-{p 4 4 2}{cmd:{opt std}} Returns the standard deviation of the effect, besides the average.{p_end}
+{p 4 4 2}{cmd:{opt std}} returns the standard deviation of the effect, besides the average.{p_end}
+
+{p 4 4 2}{cmd:{opt s:tats}} returns specified poverty and inequality indicators, and statistics of variables in the equation.{p_end}
 
 {title:Saved Results}
 
@@ -124,9 +137,11 @@ By typing {helpb return list}, the following results are reported:
 {synopt:{cmd:r(sd)}}standard deviation of the effects based on all paths. If option {hi:std} is specify. {p_end}
 {synopt:{cmd:r(gic)}}average effect of each components based on all paths when the indicators are the changes on {it:welfarevar()} by bin.{p_end}
 {synopt:{cmd:r(sd_gic)}}standard deviation of each components based on all paths when the indicators are the changes on {it:welfarevar()} by bin. If option {hi:std} is specify. {p_end}
+{synopt:{cmd:r(stats)}}poverty and inequality indicators. If option {hi:stats} is specify. {p_end}
+{synopt:{cmd:r(statsvar)}}summary statistics of factors. If option {hi:stats} is specify. {p_end}
 
 {pstd}{cmd:Obs:} On the reported matrices {p_end}
-{pstd}{it:Index label}: 0 - FGT(0); 1 - FGT(1); 2 - FGT(2); 3 - Gini; 4 - Theil.{p_end}
+{pstd}{it:Index label}: 0 - FGT(0); 1 - FGT(1); 2 - FGT(2); 3 - Gini; 4 - Theil; 5 - Mean; 6 - Bottom(); 7 - Top(); 8 - Bottom()/Mean; 9 - Middle(# #).{p_end}
 {pstd}{it:Effect label}: 1 represents the first {it:component} listed on the command, and so on. Total of components plus 1 represents the total change on the indicator and plus 2 denotes the residual, when this option is specified.{p_end}
 
 {pstd}{cmd:Important}: To guarantee precision, we recommend to use {it:double} when create variables.{p_end}
@@ -150,6 +165,7 @@ By typing {helpb return list}, the following results are reported:
 
 {p 8 12}{inp:. adecomp percapitainc padults laborinc capitalinc pensioninc transferinc othersinc, by(year) equation(c1*(c2+c3+c4+c5+c6)) indicator(fgt0) varpl(pline)} {p_end}
 
+{p 8 12}{inp:. adecomp percapitainc padults laborinc capitalinc pensioninc transferinc othersinc, by(year) equation(c1*(c2+c3+c4+c5+c6)) indicator(fgt0 fgt1 fgt2 gini theil mean) varpl(pline) bottom(40) top(20) middle(40 60) mratio method(growth) stats(mean min max)} {p_end}
 
 {txt}      ({stata "_ex_adecomp, example(1)":click to run the example below})
 
@@ -230,5 +246,6 @@ By typing {helpb return list}, the following results are reported:
 
 {title:Also see}
 
-{p 2 4 2}Online:  help for {help apoverty}; {help ainequal};  {help wbopendata}; {help mpovline}; {help drdecomp}; {help skdecomp} (if installed){p_end} 
+{p 2 4 2}Online:  help for {help apoverty}; {help ainequal};  {help wbopendata}; {help mpovline}; {help drdecomp}; {help skdecomp}; {help tabmult}; {help xtsur} (if installed){p_end} 
+
 
