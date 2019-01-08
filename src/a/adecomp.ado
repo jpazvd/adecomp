@@ -1,5 +1,7 @@
-*! version 1.4  06Aug2018
+*! version 1.5  08Jan2019
 *! Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
+*  version 1.5  06Aug2018
+*  Add: report equation check by years
 *  version 1.4  06Aug2018
 *  Add: middle distribution (from bottom xx% to before top yy%)
 *  version 1.3  24Oct2013
@@ -203,7 +205,8 @@ program define adecomp, rclass sortpreserve byable(recall)
 	di in yellow "`lhs' = `eq'"
 	cap drop equation
 	qui gen double equation = `eq'
-	sum `lhs' equation `weight' if `touse'
+	tabstat `lhs' `weight'  if `touse' , by(`by') stat(N mean sd min max) notota
+	tabstat equation `weight'  if `touse' , by(`by') stat(N mean sd min max) nototal
 	sum `lhs' if `touse', meanonly
 	local aux1 = round(r(mean),2)
 	local aux3 = r(N)

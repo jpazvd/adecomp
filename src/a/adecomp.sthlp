@@ -3,7 +3,7 @@
 help for {cmd:adecomp}{right:Joao Pedro Azevedo}
 {right:Minh Cong Nguyen}
 {right:Viviane Sanfelice}
-{right:version 1.4}
+{right:version 1.5}
 {hline}
 
 {title:{cmd:adecomp} - Shapley Decomposition by Components of a Welfare Measure}
