@@ -244,8 +244,12 @@ By typing {helpb return list}, the following results are reported:
     Latin American and Caribbean Poverty Reduction and Economic Managment Group of the World Bank.{p_end} 
 	
 
+{title:GitHub Respository}
+
+{p 4 4 2}For previous releases please visit ADECOMP {browse "https://github.com/jpazvd/adecomp" :GitHub Repo}{p_end}
+
+
 {title:Also see}
 
 {p 2 4 2}Online:  help for {help apoverty}; {help ainequal};  {help wbopendata}; {help mpovline}; {help drdecomp}; {help skdecomp}; {help tabmult}; {help xtsur} (if installed){p_end} 
-
 
