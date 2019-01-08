@@ -165,15 +165,16 @@ By typing {helpb return list}, the following results are reported:
 
 {p 8 12}{inp:. adecomp percapitainc padults laborinc capitalinc pensioninc transferinc othersinc, by(year) equation(c1*(c2+c3+c4+c5+c6)) indicator(fgt0) varpl(pline)} {p_end}
 
-{p 8 12}{inp:. adecomp percapitainc padults laborinc capitalinc pensioninc transferinc othersinc, by(year) equation(c1*(c2+c3+c4+c5+c6)) indicator(fgt0 fgt1 fgt2 gini theil mean) varpl(pline) bottom(40) top(20) middle(40 60) mratio method(growth) stats(mean min max)} {p_end}
+{p 8 12}{inp:. adecomp percapitainc padults laborinc capitalinc pensioninc transferinc othersinc, by(year) equation(c1*(c2+c3+c4+c5+c6)) indicator(fgt0 fgt1 fgt2 gini theil mean) varpl(pline) bottom(40) method(growth)}{p_end}
+
 
 {txt}      ({stata "_ex_adecomp, example(1)":click to run the example below})
 
 	. use exdata_adecomp.dta, clear
 	
 	{cmd:. adecomp ipcf_ppp ila_ppp itran_ppp ijubi_ppp icap_ppp others} ///
-	{cmd:. [w=pondera], by(ano) eq(c1+c2+c3+c4+c5) } ///
-	{cmd:. varpl(lp_2usd_ppp) in(fgt0 fgt1 fgt2 gini theil) }
+	{cmd:  [w=pondera], by(ano) eq(c1+c2+c3+c4+c5) } ///
+	{cmd:  varpl(lp_2usd_ppp) in(fgt0 fgt1 fgt2 gini theil) }
 	
 	. mat result = r(b)
 	. mat colnames  result = indicator effect rate
@@ -202,28 +203,41 @@ By typing {helpb return list}, the following results are reported:
 
 {title:References}
 
-{p 4 4 2}Azevedo, Joao Pedro, Gabriela Inchauste, and Viviane Sanfelice. Forthcoming. Decomposing the Recent Inequality Decline in Latin America. World Bank (mimeo).{p_end}
+{p 4 4 2}Azevedo, Joao Pedro, Viviane Sanfelice and Minh Cong Nguyen (2012) Shapley Decomposition by Components of 
+	a Welfare Measure. MPRA Paper 85584, University Library of Munich, Germany.
+	{browse "https://ideas.repec.org/p/pra/mprapa/85584.html":(link to publication)}{p_end}
+	
+{p 4 4 2}Azevedo, Joao Pedro, Gabriela Inchauste, and Viviane Sanfelice (2013) "Decomposing the recent inequality decline 
+	in Latin America," Policy Research Working Paper Series 6715, The World Bank.
+	{browse "https://ideas.repec.org/p/wbk/wbrwps/6715.html":(link to publication)}{p_end}
 
-{p 4 4 2}Azevedo, Joao Pedro, Gabriela Inchauste, Sergio Olivieri, Jaime Saavedra, and Hernan Winkler. Forthcoming. “Is Labor Income Responsible for Poverty Reduction? A Decomposition Approach.” World Bank Policy Research Working Paper.{p_end}
+{p 4 4 2}Azevedo, Joao Pedro, Gabriela Inchauste, Sergio Olivieri, Jaime Saavedra, and Hernan Winkler. (2013) "Is labor 
+	income responsible for poverty reduction ? a decomposition approach," Policy Research Working Paper Series 6414, 
+	The World Bank. {browse "https://ideas.repec.org/p/wbk/wbrwps/6414.html":(link to publication)}{p_end}
 
-{p 4 4 2}Azevedo, Joao Pedro, Viviane Sanfelice and Minh Cong Nguyen (2012) Shapley Decomposition by Components of a Welfare Measure. World Bank. (mimeo){p_end}
+{p 4 4 2}Barros, Ricardo Paes de. Carvalho, Mirela de. Franco, Samuel. Mendoça, Rosane (2006). "Uma Análise das 
+	Principais Causas da Queda Recente na Desigualdade de Renda Brasileira." In: Revista Econômica. Volume 8, número 	
+	1, p.117-147. Universidade Federal Fluminense. Rio de Janeiro. 
+	{browse "https://doi.org/10.22409/economica.8i1.p158" : (link to publication)}{p_end}
 
-{p 4 4 2}Barros, Ricardo Paes de. Carvalho, Mirela de. Franco, Samuel. Mendoça, Rosane (2006). "Uma Análise das Principais Causas da Queda Recente na Desigualdade de Renda Brasileira." In: Revista Econômica. Volume 8, número 1, p.117-147. Universidade Federal Fluminense. Rio de Janeiro. 
-{browse "http://www.uff.br/revistaeconomica/V8N1/RICARDO.PDF" : (link to publication)}{p_end}
+{p 4 4 2}Essama-Nssah, B. (2012). "Identification of Sources of Variation in Poverty Outcomes", World Bank Policy Research 
+	Working Papers, No. 5954.{p_end}
 
-{p 4 4 2}Essama-Nssah, B. (2012). "Identification of Sources of Variation in Poverty Outcomes", World Bank Policy Research Working Papers, No. 5954.{p_end}
+{p 4 4 2}Ferreira Francisco H.G. (2010) "Distributions in Motion: Economic Growth, Inequality and Poverty Dynamics".  
+	World Bank Policy Research Working Paper No. 5424.  The World Bank, Washington, D.C.{p_end}
 
-{p 4 4 2}Ferreira Francisco H.G. (2010) "Distributions in Motion: Economic Growth, Inequality and Poverty Dynamics".  World Bank Policy Research Working Paper No. 5424.  The World Bank, Washington, D.C.{p_end}
+{p 4 4 2}Fortin Nicole, Lemieux Thomas and Firpo Sergio. (2011). "Decomposition Methods in Economics".  In: Ashenfelter 
+	Orley and Card David (eds) Handbook of Labor Economics, Vol. 4A , pp. 1-102. Northolland, Amsterdam..{p_end}
 
-{p 4 4 2}Fortin Nicole, Lemieux Thomas and Firpo Sergio. (2011). "Decomposition Methods in Economics".  In: Ashenfelter Orley and Card David (eds) Handbook of Labor Economics, Vol. 4A , pp. 1-102. Northolland, Amsterdam..{p_end}
-
-{p 4 4 2}Inchauste, Gabriela , João Pedro Azevedo, Sergio Olivieri, Jaime Saavedra, and Hernan Winkler (2012) When Job Earnings Are behind Poverty Reduction. Economic Premise, November 2012, Number 97. World Bank: Washington DC. 
+{p 4 4 2}Inchauste, Gabriela , João Pedro Azevedo, Sergio Olivieri, Jaime Saavedra, and Hernan Winkler (2012) When Job 
+	Earnings Are behind Poverty Reduction. Economic Premise, November 2012, Number 97. World Bank: Washington DC. 
 {browse "http://siteresources.worldbank.org/EXTPREMNET/Resources/EP97.pdf" : (link to publication)}{p_end}
 
-{p 4 4 2}Shapley, L. (1953). "A value for n-person games", in: H. W. Kuhn and A. W. Tucker (eds.), Contributions to the Theory of Games, Vol. 2 (Princeton, N.J.: Princeton University Press).{p_end}
+{p 4 4 2}Shapley, L. (1953). "A value for n-person games", in: H. W. Kuhn and A. W. Tucker (eds.), Contributions to the 
+	Theory of Games, Vol. 2 (Princeton, N.J.: Princeton University Press).{p_end}
 
-{p 4 4 2}Shorrocks, Anthony (2012) Decomposition procedures for distributional analysis: a unified framework based on the Shapley value. Journal of Economic Inequality
-{browse "http://dx.doi.org/10.1007/s10888-011-9214-z" : (link to publication)}{p_end}
+{p 4 4 2}Shorrocks, Anthony (2012) Decomposition procedures for distributional analysis: a unified framework based on 
+	the Shapley value. Journal of Economic Inequality {browse "http://dx.doi.org/10.1007/s10888-011-9214-z" : (link to publication)}{p_end}
 
 {p 4 4 2}World Bank (2012) The Effect Of Women'S Economic Power: in Latin America and the Caribbean. {cmd:LAC Poverty and Labor Brief}. World Bank: Washington DC.
 {browse "http://www.bancomundial.org/content/dam/Worldbank/document/PLBSummer12latest.pdf" : (link to publication)}{p_end}
