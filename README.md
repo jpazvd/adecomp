@@ -41,8 +41,8 @@ Latin America," Policy Research Working Paper Series 6715, The World Bank.](http
 income responsible for poverty reduction ? a decomposition approach," Policy Research Working Paper Series 6414, The 
 World Bank.](http://hdl.handle.net/10986/15552)
 
-[Barros, Ricardo Paes de. Carvalho, Mirela de. Franco, Samuel. Mendoça, Rosane (2006). "Uma Análise das Principais 
-Causas da Queda Recente na Desigualdade de Renda Brasileira." In: Revista Econômica. Volume 8, número 1, p.117-147. 
+[Barros, Ricardo Paes de. Carvalho, Mirela de. Franco, Samuel. MendoÃ§a, Rosane (2006). "Uma AnÃ¡lise das Principais 
+Causas da Queda Recente na Desigualdade de Renda Brasileira." In: Revista EconÃ´mica. Volume 8, nÃºmero 1, p.117-147. 
 Universal Federal Fluminense. Rio de Janeiro.](http://www.uff.br/revistaeconomica/V8N1/RICARDO.PDF)
 
 Essama-Nssah, B. (2012). "Identification of Sources of Variation in Poverty Outcomes", World Bank Policy Research 
@@ -54,9 +54,9 @@ Policy Research Working Paper No. 5424.  The World Bank, Washington, D.C.
 Fortin Nicole, Lemieux Thomas and Firpo Sergio. (2011). "Decomposition Methods in Economics".  In: Ashenfelter Orley 
 and Card David (eds) Handbook of Labor Economics, Vol. 4A , pp. 1-102. Northolland, Amsterdam..
 
-[Inchauste, Gabriela; Azevedo, João Pedro; Essama-Nssah, B.; Olivieri, Sergio; Van Nguyen, Trang; Saavedra-Chanduvi, 
+[Inchauste, Gabriela; Azevedo, JoÃ£o Pedro; Essama-Nssah, B.; Olivieri, Sergio; Van Nguyen, Trang; Saavedra-Chanduvi, 
 Jaime; Winkler, Hernan. 2014. Understanding Changes in Poverty. Directions in Development--Poverty;. World Bank Group, 
-Washington, DC. © World Bank.](http://hdl.handle.net/10986/19445)
+Washington, DC. Â© World Bank.](http://hdl.handle.net/10986/19445)
 
 Shapley, L. (1953). "A value for n-person games", in: H. W. Kuhn and A. W. Tucker (eds.), Contributions to the Theory 
 of Games, Vol. 2 (Princeton, N.J.: Princeton University Press).
@@ -70,7 +70,7 @@ and the Caribbean poverty and labor brief. Washington, DC: World Bank. ](http://
 
 ## Suggested Citation
 
-[Azevedo, Joao Pedro, Minh Cong Nguyen, and Viviane Sanfelice, 2012. "ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure," Statistical Software Components S457562, Boston College Department of Economics.](https://ideas.repec.org/c/boc/bocode/s457562.html)
+[Azevedo, Joao Pedro, Minh Cong Nguyen, and Viviane Sanfelice, 2012. "ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure," Statistical Software Components S457562, Boston College Department of Economics, revised 12 Jan 2019.](https://ideas.repec.org/c/boc/bocode/s457562.html)
 
 #### Handle: RePEc:boc:bocode:s457562 
 
