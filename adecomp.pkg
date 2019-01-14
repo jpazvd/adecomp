@@ -1,7 +1,7 @@
-v 1.1
+v 1.5
 d 'ADECOMP': ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure
 d 
-d Distribution-Date:   20181209
+d Distribution-Date:   20190112
 d License: MIT
 d 
 F src/a/adecomp.ado
