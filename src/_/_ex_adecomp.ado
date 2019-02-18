@@ -14,10 +14,10 @@ if ( "`example'" == "1") {
 	
 	mat result = r(b)
 
+
 	mat colnames  result = indicator effect rate
 
-	qui drop _all
-	
+	drop _all
 	svmat double result, n(col)
 
 	label define indicator 0 "FGT0" 1 "FGT1" 2 "FGT2" 3 "Gini" 4 "Theil"
@@ -34,15 +34,12 @@ if ( "`example'" == "1") {
 	label values effect effect
 
 	local total 6
-	qui gen aux=rate if  effect==`total'
-	qui egen total_effect=sum(aux) , by(indicator)
-	qui drop aux
-	qui gen share_effect= -100*rate/abs(total_effect)
-	
-	qui keep if effect!=6
-	
-	graph bar share_effect , over(effect, label(labsize(*0.6))) by(indicator)  ytitle(Share of the component effect in the total change)
+	gen aux=rate if  effect==`total'  
+	egen total_effect=sum(aux) , by(indicator)
+	drop aux
+	gen share_effect= -100*rate/abs(total_effect)
+
+	graph bar share_effect if effect!=6, over(effect) by(indicator)
 }
-restore
 
 end
