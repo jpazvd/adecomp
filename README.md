@@ -1,4 +1,4 @@
-# ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure
+﻿# ADECOMP: Stata module to estimate Shapley Decomposition by Components of a Welfare Measure
 
 ## Description
 
@@ -79,3 +79,18 @@ This module should be installed from within Stata by typing "ssc install adecomp
 
 #### Keywords
 Poverty, Inequality, Decomposition, Nonparametric
+
+
+## Authors: 
+
+  **João Pedro Azevedo**  
+  [jazevedo@worldbank.org](mailto:jazevedo@worldbank.org)  
+  World Bank  
+  [personal page](http://www.worldbank.org/en/about/people/j/joao-pedro-azevedo)  
+
+  **Minh Cong Nguyen**  
+  [mnguyen3@worldbank.org](mailto:mnguyen3@worldbank.org)  
+  World Bank  
+
+  **Viviane Sanfelice**  
+
