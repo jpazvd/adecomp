@@ -1,7 +1,12 @@
-*! version 1.5  08Jan2019
+*! version 1.6  15Mar2021
 *! Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
-*  version 1.5  06Aug2018
-*  Add: report equation check by years
+*  Add: 
+*	median
+*	update help file
+*  version 1.5  08Jan2019
+*  Add: 
+*	modify the equation check. It now reports results by year. This can facilitate the debugging.
+*   update help file
 *  version 1.4  06Aug2018
 *  Add: middle distribution (from bottom xx% to before top yy%)
 *  version 1.3  24Oct2013
@@ -9,21 +14,20 @@
 *  version 1.2  16May2013
 *  Add: bottom xx% of the distribution (mean and ratio to all sample)
 *  version 1.1  01Dec2012
-*  Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
 *  version 1.0  15Mar2012
-*  Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
 
 cap program drop adecomp
 program define adecomp, rclass sortpreserve byable(recall)
 	version 12, missing
 	if c(more)=="on" set more off
 	local version : di "version " string(_caller()) ", missing:"
-	syntax varlist(numeric) [if] [in] [aweight fweight], by(varname numeric) EQuation(string)  	    ///
-			[varpl(varname numeric) INdicator(string) mpl(numlist sort) gic(numlist max=1)   		///
-			Rank(string) ID(varname numeric) PERCentile(numlist max=1)                              ///
-			GRoup(varname numeric) oneway RESidual std strata(varname min=1 max=10) 				///
+	syntax varlist(numeric) [if] [in] [aweight fweight], by(varname numeric) EQuation(string)  	     ///
+			[varpl(varname numeric) INdicator(string) mpl(numlist sort) gic(numlist max=1)   		 ///
+			Rank(string) ID(varname numeric) PERCentile(numlist max=1)                               ///
+			GRoup(varname numeric) oneway RESidual std strata(varname min=1 max=10) 				 ///
 			Bottom(numlist max=1 integer <=99 integer>=1) Top(numlist max=1 integer <=99 integer>=1) ///
-			MIDdle(numlist max=2 integer <=99 integer>=1 sort) MRatio Method(string) svy bootstrap(numlist max=1) Stats(string)]                            		
+			MIDdle(numlist max=2 integer <=99 integer>=1 sort) MRatio Method(string) svy 			 ///
+			bootstrap(numlist max=1) Stats(string)]                            		
 	
 	***	Error messages
 	if ("`id'"!="")&(("`rank'"!="")|("`percentile'"!="")|("`strata'"!="")) {
@@ -77,7 +81,7 @@ program define adecomp, rclass sortpreserve byable(recall)
 		}
 	}
 	*** Add indicator for Top/Bottom x percentiles and indicators' label
-	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean", add modify
+	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median", add modify
 	if ("`bottom'"!="") & ("`top'"!="") {
 		if ("`mratio'"!="") local indicator "`indicator' bottom top ratio"
 		if ("`mratio'"=="") local indicator "`indicator' bottom top"
@@ -205,8 +209,7 @@ program define adecomp, rclass sortpreserve byable(recall)
 	di in yellow "`lhs' = `eq'"
 	cap drop equation
 	qui gen double equation = `eq'
-	tabstat `lhs' `weight'  if `touse' , by(`by') stat(N mean sd min max) notota
-	tabstat equation `weight'  if `touse' , by(`by') stat(N mean sd min max) nototal
+	sum `lhs' equation `weight' if `touse'
 	sum `lhs' if `touse', meanonly
 	local aux1 = round(r(mean),2)
 	local aux3 = r(N)
@@ -311,7 +314,7 @@ program define adecomp, rclass sortpreserve byable(recall)
 	label define beffect `=`n_comp'+2' "residual", add	
 	
 	*** Add indicator for Top/Bottom x percentiles and indicators' label
-	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean", add modify
+	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median", add modify
 	if ("`bottom'"!="") & ("`top'"!="") {
 		if ("`mratio'"!="") label define index 6 "Bottom(`bottom')" 7 "Top(`top')" 8 "Bottom(`bottom')/Mean", add modify
 		if ("`mratio'"=="") label define index 6 "Bottom(`bottom')" 7 "Top(`top')", add modify
@@ -593,6 +596,7 @@ void _fstats(string scalar inclst, string scalar byvar, string scalar w, string 
 		if (indlist[i]=="top")   y0 = y0 \ 7
 		if (indlist[i]=="ratio")  y0 = y0 \ 8
 		if (indlist[i]=="middle")  y0 = y0 \ 9
+		if (indlist[i]=="median")  y0 = y0 \ 10
 	}
 
 	indt0 = _fcompind(_fsubmatrix((inclist, wt, pline, group, by), 5, minmax[1,1]))	
@@ -723,6 +727,7 @@ function _fdecomp(real matrix inclist, real matrix by, real matrix wt, real matr
 			if (indlist[i]=="top")   y0 = y0 \ 7
 			if (indlist[i]=="ratio")  y0 = y0 \ 8
 			if (indlist[i]=="middle")  y0 = y0 \ 9
+			if (indlist[i]=="median")  y0 = y0 \ 10
 		}
 		beffind = J(0,3+rows(gr0),.)
 		beffmpl = J(0,3+rows(gr0)*(cols(mpl)+1),.)
@@ -920,6 +925,7 @@ function _fcompindcmpl(real matrix X) {
 				if (indlist[i]=="top")   y = y \ _ftop(X1[.,1], z0, z1, X1[.,2], top)			
 				if (indlist[i]=="ratio") y = y \ _fratio(X1[.,1], z0, z1, X1[.,2], btm)			
 				if (indlist[i]=="middle") y = y \ _fmiddle(X1[.,1], z0, z1, X1[.,2], mid[1,1], mid[1,2])			
+				if (indlist[i]=="median") y = y \ mm_median(X1[.,1], X1[.,2])			
 			} // for i - each indicator
 			indgr = indgr, y
 		} // for each mpl value		
@@ -950,6 +956,7 @@ function _fcompind(real matrix X) {
 			if (indlist[i]=="top")   y = y \ _ftop(X1[.,1], z0, X1[.,3], X1[.,2], top)			
 			if (indlist[i]=="ratio") y = y \ _fratio(X1[.,1], z0, X1[.,3], X1[.,2], btm)
 			if (indlist[i]=="middle") y = y \ _fmiddle(X1[.,1], z0, X1[.,3], X1[.,2], mid[1,1], mid[1,2])			
+			if (indlist[i]=="median") y = y \ mm_median(X1[.,1], X1[.,2])
 		}
 		indgr = indgr, y
 	}	
@@ -1203,6 +1210,14 @@ function _fratio(x, z0, z1, w, btm) {
 function _fmiddle(x, z0, z1, w, mid1, mid2) {
 	x1 = x, w, _fpctile(x, 100, w)	
 	x2 = select(x1, (x1[.,cols(x1)]:>mid1) :+ (x1[.,cols(x1)]:<mid2) :-1)
+	return(mean(x2[.,1], x2[.,2]))
+
+}
+
+// median function
+function _fmedian(x, z0, z1, w) {
+	x1 = x, w, _fpctile(x, 100, w)	
+	x2 = select(x1, x1[.,cols(x1)]:==50)
 	return(mean(x2[.,1], x2[.,2]))
 }
 
