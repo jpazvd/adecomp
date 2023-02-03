@@ -209,8 +209,10 @@ program define adecomp, rclass sortpreserve byable(recall)
 	di in yellow "`lhs' = `eq'"
 	cap drop equation
 	qui gen double equation = `eq'
-	sum `lhs' equation `weight' if `touse'
-	sum `lhs' if `touse', meanonly
+	*sum `lhs' equation `weight' if `touse'
+	*sum `lhs' if `touse', meanonly
+	tabstat `lhs' `weight'  if `touse' , by(`by') stat(N mean sd min max) notota
+	tabstat equation `weight'  if `touse' , by(`by') stat(N mean sd min max) nototal
 	local aux1 = round(r(mean),2)
 	local aux3 = r(N)
 	sum equation if `touse', meanonly
