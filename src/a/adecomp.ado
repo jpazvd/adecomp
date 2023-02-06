@@ -1,20 +1,24 @@
-*! version 1.6  15Mar2021
+*! version 1.7  06Feb2023
 *! Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
+*  Add: 
+*	sum
+* version 1.6  15Mar2021
+* Joao Pedro Azevedo, Minh Cong Nguyen, Viviane Sanfelice
 *  Add: 
 *	median
 *	update help file
-*  version 1.5  08Jan2019
+* version 1.5  08Jan2019
 *  Add: 
 *	modify the equation check. It now reports results by year. This can facilitate the debugging.
 *   update help file
-*  version 1.4  06Aug2018
+* version 1.4  06Aug2018
 *  Add: middle distribution (from bottom xx% to before top yy%)
-*  version 1.3  24Oct2013
+* version 1.3  24Oct2013
 *  Add: top xx% of the distribution (mean and ratio to all sample), add growth method
-*  version 1.2  16May2013
+* version 1.2  16May2013
 *  Add: bottom xx% of the distribution (mean and ratio to all sample)
-*  version 1.1  01Dec2012
-*  version 1.0  15Mar2012
+* version 1.1  01Dec2012
+* version 1.0  15Mar2012
 
 cap program drop adecomp
 program define adecomp, rclass sortpreserve byable(recall)
@@ -81,7 +85,7 @@ program define adecomp, rclass sortpreserve byable(recall)
 		}
 	}
 	*** Add indicator for Top/Bottom x percentiles and indicators' label
-	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median", add modify
+	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median" 11 "Sum" 12 "WSum", add modify
 	if ("`bottom'"!="") & ("`top'"!="") {
 		if ("`mratio'"!="") local indicator "`indicator' bottom top ratio"
 		if ("`mratio'"=="") local indicator "`indicator' bottom top"
@@ -209,10 +213,9 @@ program define adecomp, rclass sortpreserve byable(recall)
 	di in yellow "`lhs' = `eq'"
 	cap drop equation
 	qui gen double equation = `eq'
-	*sum `lhs' equation `weight' if `touse'
-	*sum `lhs' if `touse', meanonly
-	tabstat `lhs' `weight'  if `touse' , by(`by') stat(N mean sd min max) notota
-	tabstat equation `weight'  if `touse' , by(`by') stat(N mean sd min max) nototal
+    *** check equation using tabstat
+	tabstat `lhs' `weight'  if `touse' , by(`by') stat(N mean sd min max sum) notota
+	tabstat equation `weight'  if `touse' , by(`by') stat(N mean sd min max sum) nototal
 	local aux1 = round(r(mean),2)
 	local aux3 = r(N)
 	sum equation if `touse', meanonly
@@ -316,7 +319,7 @@ program define adecomp, rclass sortpreserve byable(recall)
 	label define beffect `=`n_comp'+2' "residual", add	
 	
 	*** Add indicator for Top/Bottom x percentiles and indicators' label
-	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median", add modify
+	label define index 0 "FGT(0)" 1 "FGT(1)" 2 "FGT(2)" 3 "Gini" 4 "Theil" 5 "Mean" 10 "Median" 11 "Sum" 12 "WSum", add modify
 	if ("`bottom'"!="") & ("`top'"!="") {
 		if ("`mratio'"!="") label define index 6 "Bottom(`bottom')" 7 "Top(`top')" 8 "Bottom(`bottom')/Mean", add modify
 		if ("`mratio'"=="") label define index 6 "Bottom(`bottom')" 7 "Top(`top')", add modify
@@ -599,6 +602,8 @@ void _fstats(string scalar inclst, string scalar byvar, string scalar w, string 
 		if (indlist[i]=="ratio")  y0 = y0 \ 8
 		if (indlist[i]=="middle")  y0 = y0 \ 9
 		if (indlist[i]=="median")  y0 = y0 \ 10
+		if (indlist[i]=="sum")  y0 = y0 \ 11
+		if (indlist[i]=="wsum")  y0 = y0 \ 12
 	}
 
 	indt0 = _fcompind(_fsubmatrix((inclist, wt, pline, group, by), 5, minmax[1,1]))	
@@ -730,6 +735,8 @@ function _fdecomp(real matrix inclist, real matrix by, real matrix wt, real matr
 			if (indlist[i]=="ratio")  y0 = y0 \ 8
 			if (indlist[i]=="middle")  y0 = y0 \ 9
 			if (indlist[i]=="median")  y0 = y0 \ 10
+			if (indlist[i]=="sum")  y0 = y0 \ 11
+			if (indlist[i]=="wsum")  y0 = y0 \ 12
 		}
 		beffind = J(0,3+rows(gr0),.)
 		beffmpl = J(0,3+rows(gr0)*(cols(mpl)+1),.)
@@ -928,6 +935,8 @@ function _fcompindcmpl(real matrix X) {
 				if (indlist[i]=="ratio") y = y \ _fratio(X1[.,1], z0, z1, X1[.,2], btm)			
 				if (indlist[i]=="middle") y = y \ _fmiddle(X1[.,1], z0, z1, X1[.,2], mid[1,1], mid[1,2])			
 				if (indlist[i]=="median") y = y \ mm_median(X1[.,1], X1[.,2])			
+				if (indlist[i]=="sum") y = y \ _fsum(X1[.,1])	
+				if (indlist[i]=="wsum") y = y \ _fwsum(X1[.,1], X1[.,2])			
 			} // for i - each indicator
 			indgr = indgr, y
 		} // for each mpl value		
@@ -959,6 +968,8 @@ function _fcompind(real matrix X) {
 			if (indlist[i]=="ratio") y = y \ _fratio(X1[.,1], z0, X1[.,3], X1[.,2], btm)
 			if (indlist[i]=="middle") y = y \ _fmiddle(X1[.,1], z0, X1[.,3], X1[.,2], mid[1,1], mid[1,2])			
 			if (indlist[i]=="median") y = y \ mm_median(X1[.,1], X1[.,2])
+			if (indlist[i]=="sum") y = y \ _fsum(X1[.,1])	
+			if (indlist[i]=="wsum") y = y \ _fwsum(X1[.,1], X1[.,2])	
 		}
 		indgr = indgr, y
 	}	
@@ -1213,7 +1224,6 @@ function _fmiddle(x, z0, z1, w, mid1, mid2) {
 	x1 = x, w, _fpctile(x, 100, w)	
 	x2 = select(x1, (x1[.,cols(x1)]:>mid1) :+ (x1[.,cols(x1)]:<mid2) :-1)
 	return(mean(x2[.,1], x2[.,2]))
-
 }
 
 // median function
@@ -1221,6 +1231,16 @@ function _fmedian(x, z0, z1, w) {
 	x1 = x, w, _fpctile(x, 100, w)	
 	x2 = select(x1, x1[.,cols(x1)]:==50)
 	return(mean(x2[.,1], x2[.,2]))
+}
+
+// sum function
+function _fsum(x) {
+	return(quadsum(x))
+}
+
+// weighted sum function
+function _fwsum(x, w) {
+	return(quadsum(x:*w))
 }
 
 // gini coefficient (fastgini formula)
