@@ -3,7 +3,7 @@
 help for {cmd:adecomp}{right:Joao Pedro Azevedo}
 {right:Minh Cong Nguyen}
 {right:Viviane Sanfelice}
-{right:version 1.5}
+{right:version 1.6}
 {hline}
 
 {title:{cmd:adecomp} - Shapley Decomposition by Components of a Welfare Measure}
@@ -83,7 +83,7 @@ The component variables in {it:varlist} must be denoted by c#, and must be separ
 
 {title:Options}
 
-{p 4 4 2}{cmd:{opt in:dicator(string)}} poverty and inequality indicators. fgt0, fgt1, fgt2, gini, theil, and mean are the currently supported 
+{p 4 4 2}{cmd:{opt in:dicator(string)}} poverty and inequality indicators. fgt0, fgt1, fgt2, gini, theil, median, and mean are the currently supported 
 options.{p_end}
 
 {p 4 4 2}{cmd:{opt t:op(#)}, {opt b:ottom(#)}} mean at bottom x%, top y% of the {it:welfarevar} distribution, and {opt mr:atio} is the ratio between the mean of bottom x% over the mean of the whole distribution.{p_end}
@@ -149,7 +149,7 @@ By typing {helpb return list}, the following results are reported:
 
 {title:Examples}
 
-{p 8 12}{inp:. adecomp percapitainc laborinc nonlaborinc, by(year) equation(c1+c2) indicator(fgt0 fgt1 fgt2 gini theil) varpl(pline)}{p_end}
+{p 8 12}{inp:. adecomp percapitainc laborinc nonlaborinc, by(year) equation(c1+c2) indicator(fgt0 fgt1 fgt2 gini theil median median) varpl(pline)}{p_end}
 
 {p 8 12}{inp:. adecomp percapitainc laborinc nonlaborinc, by(year) equation(c1+c2) in(fgt0) varpl(pline) gic(100)}{p_end}
 
